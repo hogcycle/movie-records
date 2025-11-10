@@ -1,6 +1,7 @@
 import type { Movie } from "../src/interfaces/movie";
 import { MovieEditor } from "../src/components/MovieEditor";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 describe("MovieEditor Component", () => {
     const mockMovie: Movie = {
@@ -37,5 +38,14 @@ describe("MovieEditor Component", () => {
         const title = screen.getByDisplayValue("The Test Movie");
 
         expect(title).toBeInTheDocument();
+    });
+
+    test("Update Title with userEvent", () => {
+        const title = screen.getByDisplayValue("The Test Movie");
+
+        userEvent.clear(title);
+        userEvent.type(title, "New Title");
+
+        expect(title).toHaveValue("New Title");
     });
 });
